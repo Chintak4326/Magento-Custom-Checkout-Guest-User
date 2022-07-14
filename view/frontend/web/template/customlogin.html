@@ -1,0 +1,89 @@
+<li id="login" data-bind="fadeVisible: isVisible">
+    <li id="login-true" data-bind="fadeVisible: islogin() == 'login'">
+        <div class="step-title" data-role="title"><!-- ko i18n: 'Login'--><!-- /ko --></div>
+        <div id="checkout-step-title"
+             class="step-content"
+             data-role="content" data-bind="afterRender: goToNextStep">
+             <span class="note"><!-- ko i18n: 'You already have logged in with us. Please continue'--><!-- /ko --></span>
+             <form data-bind="submit: navigateToNextStep" novalidate="novalidate">
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button data-role="opc-continue" type="submit" class="button action continue primary">
+                            <span><!-- ko i18n: 'Continue'--><!-- /ko --></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+         </div>
+    </li>
+    <li id="login-false" data-bind="fadeVisible: islogin() == 'notlogin'">
+        <div class="step-title" data-role="title"><!-- ko i18n: 'Login'--><!-- /ko --></div>
+        <div id="checkout-step-title"
+             class="step-content"
+             data-role="content">
+
+            <form class="form form-login" data-role="email-with-possible-login" data-bind="submit:login" method="post">
+                <fieldset id="customer-email-fieldset" class="fieldset">
+                    <div class="field required">
+                        <label class="label" for="customer-email"><span><!-- ko i18n: 'Email Address'--><!-- /ko --></span></label>
+                        <div class="control _with-tooltip">
+                            <input class="input-text" type="email" data-bind="textInput: email, hasFocus: emailFocused" name="username" data-validate="{required:true, 'validate-email':true}" id="customer-email" />
+                            <div style="display: none;" id="customer-email-custom-error" class="mage-error">Please enter a valid email address (Ex: johndoe@domain.com).</div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="customer-password-fieldset" class="fieldset" data-bind="fadeVisible: isPasswordVisible">
+                    <div class="field">
+                        <label class="label" for="customer-password"><span data-bind="i18n: 'Password'"><!-- ko i18n: 'Next'--><!-- /ko --></span></label>
+                        <div class="control">
+                            <input class="input-text"
+                                   data-bind="
+                                        attr: {
+                                            placeholder: $t('Password'),
+                                        }"
+                                   type="password"
+                                   name="password"
+                                   id="customer-password"
+                                   data-validate="{required:true}" autocomplete="off"/>
+                            <span class="note"><!-- ko i18n: 'You already have an account with us. Sign in or continue as guest.'--><!-- /ko --></span>
+                        </div>
+                    </div>
+                    <div class="actions-toolbar">
+                        <input name="context" type="hidden" value="checkout" />
+                        <div class="primary">
+                            <button type="submit" class="action login primary" data-action="checkout-method-login"><span><!-- ko i18n: 'Login'--><!-- /ko --></span></button>
+                        </div>
+                        <div class="secondary">
+                            <a class="action remind" data-bind="attr: { href: forgotPasswordUrl }">
+                                <span><!-- ko i18n: 'Forgot Your Password?'--><!-- /ko --></span>
+                            </a>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="fieldset" data-bind="fadeVisible: isPasswordVisible() == false">
+                    <div class="primary">
+                        <a class="action primary" data-bind = "click: showPassword">
+                            <span><!-- ko i18n: 'Log In to Continue'--><!-- /ko --></span>
+                        </a>
+                    </div>
+                </fieldset>
+                <fieldset class="fieldset">
+                    <div class="primary">
+                        <a class="action primary" data-bind = "click: continueToNextStep">
+                            <span><!-- ko i18n: 'Checkout as Guest'--><!-- /ko --></span>
+                        </a>
+                    </div>
+                    <div class="primary">
+                        <a class="action" data-bind="attr: { href: registerUrl }">
+                            <span><!-- ko i18n: 'New to Dasaniconnoisseur? Create an Account'--><!-- /ko --></span>
+                        </a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </li>
+    <!-- ko foreach: elems() -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</li>
